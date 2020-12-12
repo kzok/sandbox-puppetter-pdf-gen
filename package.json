@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "watch-build": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  }
+}
