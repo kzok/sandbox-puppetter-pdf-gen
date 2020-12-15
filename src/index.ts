@@ -15,3 +15,12 @@ server.listen(HTTP_SERVER_PORT, HTTP_SERVER_BIND, (err) => {
     throw err;
   }
 });
+
+const gracefulShutdown = async () => {
+  logger.info("Terminating...");
+  await server.close();
+  logger.info("HTTP server terminated.");
+};
+
+process.on("SIGTERM", gracefulShutdown);
+process.on("SIGINT", gracefulShutdown);

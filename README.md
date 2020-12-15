@@ -9,7 +9,7 @@ puppetter を使って PDF 生成してみる
 - [ ] puppetter を使って指定サイトの pdf を生成するサーバを作成
   - [x] Helloworld 返すだけの HTTP サーバを立てる
   - [x] ロギングする
-  - [ ] SIGTERM で graceful close する
+  - [x] SIGTERM で graceful close する
   - [ ] 適当なページの PDF を返すようにする
   - [ ] puppetter で開くタブに上限を設ける
     - [async-sema](https://github.com/vercel/async-sema) 使う
