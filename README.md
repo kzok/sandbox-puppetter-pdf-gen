@@ -7,12 +7,12 @@ puppetter を使って PDF 生成してみる
 ## TODO
 
 - [ ] puppetter を使って指定サイトの pdf を生成するサーバを作成
-  - [ ] Helloworld 返すだけの HTTP サーバを立てる
+  - [x] Helloworld 返すだけの HTTP サーバを立てる
+  - [ ] ロギングする
+  - [ ] SIGTERM で graceful close する
   - [ ] 適当なページの PDF を返すようにする
   - [ ] puppetter で開くタブに上限を設ける
     - [async-sema](https://github.com/vercel/async-sema) 使う
-  - [ ] 一応ロギングする
-  - [ ] 一応 SIGTERM で graceful close する
 - [ ] パフォーマンステストを追加
   - 手元の環境での比較検証しかしないので雑に 10k リクエスト送って終了するまでの時間を測定する
 - [ ] パフォーマンステストの様子を見ながらいろいろ試してみる
