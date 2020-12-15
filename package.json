@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "start": "npm run build && node ./lib/index.js",
     "build": "tsc",
     "watch-build": "tsc --watch",
     "fmt": "run-s fmt:prettier fmt:eslint",
