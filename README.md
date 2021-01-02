@@ -10,7 +10,7 @@ puppetter を使って PDF 生成してみる
   - [x] Helloworld 返すだけの HTTP サーバを立てる
   - [x] ロギングする
   - [x] SIGTERM で graceful close する
-  - [ ] 適当なページの PDF を返すようにする
+  - [x] 適当なページの PDF を返すようにする
   - [ ] puppetter で開くタブに上限を設ける
     - [async-sema](https://github.com/vercel/async-sema) 使う
 - [ ] パフォーマンステストを追加
