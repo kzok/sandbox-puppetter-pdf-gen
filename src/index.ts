@@ -1,4 +1,5 @@
 import fastify from "fastify";
+import puppeteer from "puppeteer";
 
 import { logger } from "./logger";
 
@@ -7,7 +8,8 @@ import { logger } from "./logger";
  */
 
 const env = process.env;
-const HTTP_SERVER_PORT = parseInt(env.PDF_GEN_HTTP_PORT || "") || 10666;
+const PORT = parseInt(env.PDFGEN_PORT || "") || 10666;
+const TARGET_URL = env.PDFGEN_TARGET_URL || "https://www.example.com/";
 
 /**
  * Entry point
@@ -15,20 +17,31 @@ const HTTP_SERVER_PORT = parseInt(env.PDF_GEN_HTTP_PORT || "") || 10666;
 
 const server = fastify({ logger });
 server.get("/", async (_, res) => {
-  await new Promise((done) => setTimeout(done, 3 * 1000));
-  res.send({ hello: "world" });
+  try {
+    const browser = await puppeteer.launch();
+    const ctx = await browser.createIncognitoBrowserContext();
+    const page = await ctx.newPage();
+    await page.goto(TARGET_URL);
+    const buffer = await page.pdf({ format: "A4" });
+    res.header("content-type", "application/pdf");
+    res.send(buffer);
+  } catch (e) {
+    res.code(500);
+    res.send({ error: e.message, stack: e.stack });
+  }
 });
-server.listen(HTTP_SERVER_PORT, "0.0.0.0", (err) => {
+
+const gracefulShutdown = async (exitCode = 0) => {
+  logger.info("Terminating...");
+  await server.close();
+  logger.info("HTTP server terminated.");
+  process.exit(exitCode);
+};
+server.listen(PORT, "0.0.0.0", (err) => {
   if (err) {
     throw err;
   }
 });
 
-const gracefulShutdown = async () => {
-  logger.info("Terminating...");
-  await server.close();
-  logger.info("HTTP server terminated.");
-};
-
-process.on("SIGTERM", gracefulShutdown);
-process.on("SIGINT", gracefulShutdown);
+process.on("SIGTERM", () => gracefulShutdown());
+process.on("SIGINT", () => gracefulShutdown());
